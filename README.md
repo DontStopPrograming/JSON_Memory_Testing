@@ -34,7 +34,7 @@ Generating and testing with fictional JSON data in memory facilitates the simula
 </br>
 </br>
 
-> **PRE CONDITIONS** </br>
+> **PRE CONDITIONS** </br></br>
 Installing Node.js in your system ![image](https://github.com/DontStopPrograming/JSON_Memory_Testing/assets/101149872/c0c941c3-a5e7-47cd-97f8-0a2127bdcd7d) </br>
 Instaling package ![image](https://github.com/DontStopPrograming/JSON_Memory_Testing/assets/101149872/ae6303e2-5f97-4332-9175-486c41c2bb92) as dependencies </br>
   `npm install` or `npm i` </br>
