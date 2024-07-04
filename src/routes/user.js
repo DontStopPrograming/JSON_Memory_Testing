@@ -1,14 +1,13 @@
-import { Router } from 'express'
+// import user from '../services/user.json' assert { type: "json"}
 
-const router = Router()
+import getUserList from '../controllers/user.js'
 
-router.get('/user', (req, res) => {
-    const data = {
-        "title": "Hi !!!",
-        "website": ""
-    }
-    res.json(data)
-})
+import Router from 'express'
+
+export const router = Router()
+
+
+router.get('/user', getUserList)
 
 router.post('/user', (req, res) => {
 

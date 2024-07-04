@@ -1,14 +1,14 @@
-import movies from '../services/movies.json' assert { type: "json"}
+import movies from '../data/movies.json' assert { type: "json"}
 
 import Router from 'express'
 
-const router = Router()
+export const router = Router()
 
-router.get('/', (req, res) => {
+router.get('/movies', (req, res) => {
     res.send(movies)
 })
 
-router.post('/', (req, res) => {
+router.post('/movies', (req, res) => {
 
     const id = movies.length + 1
     const { title, rating } = req.body
@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
 
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/movies/:id', (req, res) => {
     const { id } = req.params
     movies.forEach((movie, i) => {
         if (movie.id === id) {
