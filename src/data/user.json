@@ -8,10 +8,5 @@
         "id": "2",
         "email": "segundo@gmail.com",
         "password": "segundo"
-    },
-    {
-        "id": "3",
-        "title": "tercero@gmail.com",
-        "website": "tercero"
     }
 ]
