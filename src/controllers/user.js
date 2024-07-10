@@ -16,9 +16,8 @@ export const getsUserList = async (req, res) => {
 export const getUserList = async (req, res) => {
     try {
         const userId = req.params.id
-        // const findUser = (userId)
 
-        const findUser = users.find(u => u.id === userId)
+        const findUser = user.find(u => u.id === userId)
         if (findUser) {
             res.send(findUser)
         } else {
