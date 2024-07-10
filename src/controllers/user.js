@@ -3,6 +3,9 @@ import user from '../data/user.json' assert { type: "json"}
 //Using uuidv4
 import { v4 as uuidv4 } from 'uuid'
 
+import fs from 'fs'
+import path from 'path'
+
 export const getsUserList = async (req, res) => {
     try {
         const users = await user
@@ -31,28 +34,27 @@ export const postUserList = async (req, res) => {
     try {
         const users = await user
         const newUser = req.body
-        // newUser.id = Date.now().toString()
 
-        const existUser = users.find(u => u.email === newUser.email)
-        // if (existUser) {
-        //     return res.status(400).json({ error: 'EMAIL ALREADY REGISTERED' })
-        // }
-
-        existUser
+        const updatedUser = users.find(u => u.email === newUser.email)
             ? res.status(400).json({ error: 'EMAIL ALREADY REGISTERED' })
             : (() => {
-                newUser.id = uuidv4()
-                users.push(newUser)
-                res.status(201).json(newUser)
-            })
+                const newUserWithId = { ...newUser, id: uuidv4() }
+                const updatedUserList = [...users, newUserWithId]
 
+                // Update the user data in your JSON file
+                const filePath = path.join(process.cwd(), 'src', 'data', 'user.json')
+                fs.writeFileSync(filePath, JSON.stringify(updatedUserList, null, 2))
 
+                return updatedUserList
+            })()
 
-
+        res.status(201).json(updatedUser)
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: 'ERROR POST DATA' })
     }
 }
+
+
 
 export default { getsUserList, getUserList, postUserList }
