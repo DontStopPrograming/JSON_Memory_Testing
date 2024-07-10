@@ -18,11 +18,8 @@ export const getUserList = async (req, res) => {
         const userId = req.params.id
 
         const findUser = user.find(u => u.id === userId)
-        if (findUser) {
-            res.send(findUser)
-        } else {
-            res.status(400).json({ error: 'USER NOT FOUND' })
-        }
+        res.status(200).send(findUser || res.status(400).json({ error: 'USER NOT FOUND' }))
+
     }
     catch (error) {
         console.error(error)
