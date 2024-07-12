@@ -35,12 +35,12 @@ export const postUserList = async (req, res) => {
         const users = await user
         const newUser = req.body
 
-        const updatedUser = users.find(u => u.email === newUser.email)
+        const newUserWithId = { ...newUser, id: uuidv4() }
+        const updatedUserList = [...users, newUserWithId]
+
+        const updateUserAction = users.find(u => u.email === newUser.email)
             ? res.status(400).json({ error: 'EMAIL ALREADY REGISTERED' })
             : (() => {
-                const newUserWithId = { ...newUser, id: uuidv4() }
-                const updatedUserList = [...users, newUserWithId]
-
                 // Update the user data in your JSON file
                 const filePath = path.join(process.cwd(), 'src', 'data', 'user.json')
                 fs.writeFileSync(filePath, JSON.stringify(updatedUserList, null, 2))
@@ -48,13 +48,64 @@ export const postUserList = async (req, res) => {
                 return updatedUserList
             })()
 
-        res.status(201).json(updatedUser)
+        res.status(201).json(updateUserAction)
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: 'ERROR POST DATA' })
     }
 }
 
+export const patchUserList = async (req, res) => {
+    try {
+        const users = await user
+        const usersId = req.params.id
+        const updateUser = req.body
+
+        const index = users.findIndex(u => u.id === usersId)
+
+        if (index === -1) {
+            return res.status(404).json({ error: 'USER NOT FOUND' })
+        }
+
+        const updateUser = { ...users[index], ...updateUser }
+        const updateUserList = [...users.slice(0, index), updateUser, ...users.slice(index + 1)]
+
+        const filePath = path.join(process.cwd(), 'src', 'data', 'user.json')
+        fs.writeFileSync(filePath, JSON.stringify(updatedUserList, null, 2))
+
+        res.status(200).json(updatedUser)
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: 'ERROR UPDATING USER' })
+    }
+}
+
+export const deleteUserList = async (req, res) => {
+    try {
+        const users = await user
+        const usersId = req.params.id
+
+        const index = users.findIndex(u => u.id === usersId)
+
+        if (index === -1) {
+            return res.status(404.json({ error: 'USER NOT FOUND' }))
+        }
+
+        const deleteUser = user[index]
+        const updatedUserList = [...users.slice(0, index), ...users.slice(index + 1)]
+
+        const filePath = path.join(process.cwd(), 'src', 'data', 'user.json')
+        fs.writeFileSync(filePath, JSON.stringify(updateUserList, null, 2))
+
+        res.status(200).json(deleteUser)
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: 'ERROR DELETING USER' })
+    }
+}
 
 
-export default { getsUserList, getUserList, postUserList }
+
+export default { getsUserList, getUserList, postUserList, patchUserList, deleteUserList }
