@@ -18,17 +18,22 @@ export const getsUserList = async (req, res) => {
 
 export const getUserList = async (req, res) => {
     try {
+
+        const users = await user
         const userId = req.params.id
+        const findUser = users.find(u => u.id === userId)
 
-        const findUser = user.find(u => u.id === userId)
-        res.status(200).send(findUser || res.status(400).json({ error: 'USER NOT FOUND' }))
-
+        const response = findUser
+            ? res.status(200).send(findUser)
+            : res.status(404).json({ error: 'USER NOT FOUND' })
+        return response
     }
     catch (error) {
         console.error(error)
         res.status(500).json({ error: 'ERROR GET DATA' })
     }
 }
+
 
 export const postUserList = async (req, res) => {
     try {
@@ -55,6 +60,7 @@ export const postUserList = async (req, res) => {
     }
 }
 
+
 export const patchUserList = async (req, res) => {
     try {
         const users = await user
@@ -67,8 +73,8 @@ export const patchUserList = async (req, res) => {
             return res.status(404).json({ error: 'USER NOT FOUND' })
         }
 
-        const updateUser = { ...users[index], ...updateUser }
-        const updateUserList = [...users.slice(0, index), updateUser, ...users.slice(index + 1)]
+        const updatedUser = { ...users[index], ...updateUser }
+        const updatedUserList = [...users.slice(0, index), updatedUser, ...users.slice(index + 1)]
 
         const filePath = path.join(process.cwd(), 'src', 'data', 'user.json')
         fs.writeFileSync(filePath, JSON.stringify(updatedUserList, null, 2))
@@ -81,7 +87,8 @@ export const patchUserList = async (req, res) => {
     }
 }
 
-export const deleteUserList = async (req, res) => {
+
+export const delUserList = async (req, res) => {
     try {
         const users = await user
         const usersId = req.params.id
@@ -89,14 +96,14 @@ export const deleteUserList = async (req, res) => {
         const index = users.findIndex(u => u.id === usersId)
 
         if (index === -1) {
-            return res.status(404.json({ error: 'USER NOT FOUND' }))
+            return res.status(404).json({ error: 'USER NOT FOUND' })
         }
 
-        const deleteUser = user[index]
+        const deleteUser = users[index]
         const updatedUserList = [...users.slice(0, index), ...users.slice(index + 1)]
 
         const filePath = path.join(process.cwd(), 'src', 'data', 'user.json')
-        fs.writeFileSync(filePath, JSON.stringify(updateUserList, null, 2))
+        fs.writeFileSync(filePath, JSON.stringify(updatedUserList, null, 2))
 
         res.status(200).json(deleteUser)
 
@@ -106,6 +113,4 @@ export const deleteUserList = async (req, res) => {
     }
 }
 
-
-
-export default { getsUserList, getUserList, postUserList, patchUserList, deleteUserList }
+export default { getsUserList, getUserList, postUserList, patchUserList, delUserList }
