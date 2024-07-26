@@ -1,10 +1,10 @@
-import { getsUserList, getUserList, postUserList, patchUserList, delUserList } from '../controllers/user.js'
+import { getUsersList, getUserList, postUserList, patchUserList, delUserList } from '../controllers/user.js'
 
 import Router from 'express'
 
 export const router = Router()
 
-router.get('/user', getsUserList)
+router.get('/user', getUsersList)
 
 router.get('/user/:id', getUserList)
 

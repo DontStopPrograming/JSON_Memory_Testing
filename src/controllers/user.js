@@ -1,14 +1,9 @@
-import user from '../data/user.json' assert { type: "json"}
+// import user from '../data/user.json' assert { type: "json"}
 
-//Using uuidv4
-import { v4 as uuidv4 } from 'uuid'
 
-import fs from 'fs'
-import path from 'path'
-
-export const getsUserList = async (req, res) => {
+export const getUsersList = async (req, res) => {
     try {
-        const users = await user
+        const users = await getAllUsers()
         res.send(users)
     } catch (error) {
         console.error(error)
@@ -128,4 +123,4 @@ export const delUserList = async (req, res) => {
     }
 }
 
-export default { getsUserList, getUserList, postUserList, patchUserList, delUserList }
+export default { getUsersList, getUserList, postUserList, patchUserList, delUserList }
