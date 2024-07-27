@@ -19,3 +19,4 @@ const writeUsers = (users) => {
 }
 
 export const getAllUsers = () => readUsers()
+
