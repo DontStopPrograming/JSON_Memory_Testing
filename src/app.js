@@ -5,7 +5,7 @@ import helmet from 'helmet'
 import compression from 'compression'
 import rateLimit from 'express-rate-limit'
 
-import errorHandler from './middlewares/errorrHandler.js'
+import errorHandler from './middlewares/errorHandler.js'
 
 import routerUser from './routes/user.js'
 import routerMovies from './routes/movies.js'
