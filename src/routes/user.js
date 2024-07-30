@@ -1,10 +1,10 @@
-import { getUsersList } from '../controllers/user.js'
-
 import Router from 'express'
+import { getUsersList } from '../controllers/user.js'
+import { authenticateToken, authorizeRole } from '../middlewares/auth.js'
 
 export const router = Router()
 
-router.get('/user', getUsersList)
+router.get('/user', authenticateToken, authorizeRole('admin'), getUsersList)
 
 // router.get('/user/:id', getUserList)
 

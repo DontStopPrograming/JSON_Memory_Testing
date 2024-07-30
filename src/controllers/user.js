@@ -1,5 +1,5 @@
 // import user from '../data/user.json' assert { type: "json"}
-import { getAllUsers } from '../services/user'
+import { getAllUsers } from '../services/user.js'
 
 export const getUsersList = async (req, res) => {
     try {
