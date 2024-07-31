@@ -10,6 +10,8 @@ import errorHandler from './middlewares/errorHandler.js'
 import routerUser from './routes/user.js'
 import routerMovies from './routes/movies.js'
 
+import routerAuth from './routes/auth.js'
+
 const app = express()
 app.use(morgan('dev'))
 app.use(express.json())
@@ -23,6 +25,7 @@ const limiter = rateLimit({
 
 app.use(limiter)
 
+app.user('/api/auth', routerAuth)
 app.use('/api', routerUser)
 app.use(routerMovies)
 

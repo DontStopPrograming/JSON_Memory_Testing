@@ -1,12 +1,14 @@
 [
   {
+    "id": "fefcd3bc-61c4-4c5d-97f4-d8981fb2d803",
     "email": "tres@gmail.com",
-    "password": "tres",
-    "id": "fefcd3bc-61c4-4c5d-97f4-d8981fb2d803"
+    "password": "$2b$10$KIX.vqIxV0SRTjvAOlEmMeoBfM5osqVuYOuH30URC2gZTJXOs01Ea",
+    "role": "user"
   },
   {
     "id": "36d22fe2-e4a4-41c1-ac06-1a8ace8cb2af",
     "email": "modifytryagain@gmail.com",
-    "password": "modifyhere"
+    "password": "$2b$10$KIX.vqIxV0SRTjvAOlEmMeoBfM5osqVuYOuH30URC2gZTJXOs01Ea", // hashed password for "modifyhere"
+    "role": "user"
   }
 ]
