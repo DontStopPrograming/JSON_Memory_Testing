@@ -5,6 +5,7 @@ export const getUsersList = async (req, res) => {
     try {
         const users = await getAllUsers()
         res.send(users)
+
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: 'ERROR GET DATA' })

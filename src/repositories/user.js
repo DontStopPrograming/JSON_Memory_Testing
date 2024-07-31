@@ -19,4 +19,3 @@ const readUsers = () => {
 // }
 
 export const getAllUsers = () => readUsers()
-

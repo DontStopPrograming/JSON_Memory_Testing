@@ -25,7 +25,7 @@ const limiter = rateLimit({
 
 app.use(limiter)
 
-app.user('/api/auth', routerAuth)
+app.use('/api/auth', routerAuth)
 app.use('/api', routerUser)
 app.use(routerMovies)
 

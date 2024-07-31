@@ -12,12 +12,16 @@ const readUsers = () => {
     return JSON.parse(data)
 }
 
+/**
+ * The function `writeUsers` writes the `users` data to a file in JSON format with indentation for
+  readability. @param users - The `users` parameter is an array of user objects that you want to write to a file.
+ */
 const writeUsers = (users) => {
     fs.writeFileSync(filePath, JSON.stringify(users, null, 2))
 }
 
 export const registerUser = (req, res) => {
-    const { email, password } = req.body
+    const { email, password, name } = req.body
     const users = readUsers()
 
     if (users.find(user => user.email === email)) {
@@ -29,11 +33,14 @@ export const registerUser = (req, res) => {
         id: uuidv4(),
         email,
         password: hashedPassword,
+        name,
         role: 'user'
     }
 
     users.push(newUser)
     writeUsers(users)
+
+    const token = jwt.sign({ id: newUser.id, email: newUser.email, name: newUser.name, role: newUser.role }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' })
     res.status(201).json({ message: 'User registered successfully' })
 }
 
@@ -46,6 +53,6 @@ export const loginUser = (req, res) => {
         return res.status(400).json({ error: 'Invalid credentials' })
     }
 
-    const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' })
+    const token = jwt.sign({ id: user.id, email: user.email, name: user.name, role: user.role }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' })
     res.json({ token })
 }
