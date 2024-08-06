@@ -1,5 +1,5 @@
 // import user from '../data/user.json' assert { type: "json"}
-import { getAllUsers, getUserById } from '../services/user.js'
+import { getAllUsers, getUserById, createUser, updateUser, deleteUser } from '../services/user.js'
 
 export const getUsersList = async (req, res) => {
     try {
@@ -192,4 +192,4 @@ export const delUserList = async (req, res) => {
     }
 }
 
-export default { getUsersList, getUserList }
+export default { getUsersList, getUserList, postUserList, patchUserList, delUserList }
