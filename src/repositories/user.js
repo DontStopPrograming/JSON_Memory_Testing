@@ -19,3 +19,8 @@ const readUsers = () => {
 // }
 
 export const getAllUsers = () => readUsers()
+
+export const getUserById = (id) => {
+    const users = readUsers()
+    return users.find(user => user.id === id)
+}

@@ -1,12 +1,12 @@
 import Router from 'express'
-import { getUsersList } from '../controllers/user.js'
+import { getUsersList, getUserList } from '../controllers/user.js'
 import { authenticateToken, authorizeRole } from '../middlewares/auth.js'
 
 export const router = Router()
 
 router.get('/user', authenticateToken, authorizeRole('admin'), getUsersList)
 
-// router.get('/user/:id', getUserList)
+router.get('/user/:id', getUserList)
 
 // router.post('/user', postUserList)
 

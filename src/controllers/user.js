@@ -30,6 +30,15 @@ export const getUsersList = async (req, res) => {
 //     }
 // }
 
+export const getUserList = (req, res) => {
+    try {
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ message: 'ERROR RETRIEVING DATA BY ID' })
+    }
+}
+
 
 // export const postUserList = async (req, res) => {
 //     try {

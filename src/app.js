@@ -5,12 +5,10 @@ import helmet from 'helmet'
 import compression from 'compression'
 import rateLimit from 'express-rate-limit'
 
+import routerUser from './routes/user.js'
+
 import errorHandler from './middlewares/errorHandler.js'
 
-import routerUser from './routes/user.js'
-import routerMovies from './routes/movies.js'
-
-import routerAuth from './routes/auth.js'
 
 const app = express()
 app.use(morgan('dev'))
@@ -20,14 +18,12 @@ app.use(compression())
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 100
+    max: 50
 })
 
 app.use(limiter)
 
-app.use('/api/auth', routerAuth)
 app.use('/api', routerUser)
-app.use(routerMovies)
 
 app.use(errorHandler)
 

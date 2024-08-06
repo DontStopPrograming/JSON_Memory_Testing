@@ -4,6 +4,7 @@ export const authenticateToken = (req, res, next) => {
     /* This line of code is extracting the value of the 'Authorization' header from the request headers
     and storing it in the variable `authHeader`. */
     const authHeader = req.headers['authorization']
+
     /* This line of code is extracting the token from the authorization header. */
     const token = authHeader && authHeader.split(' ')[1]
 
