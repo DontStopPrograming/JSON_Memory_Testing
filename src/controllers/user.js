@@ -1,5 +1,5 @@
 // import user from '../data/user.json' assert { type: "json"}
-import { getAllUsers } from '../services/user.js'
+import { getAllUsers, getUserById } from '../services/user.js'
 
 export const getUsersList = async (req, res) => {
     try {
@@ -30,8 +30,15 @@ export const getUsersList = async (req, res) => {
 //     }
 // }
 
-export const getUserList = (req, res) => {
+export const getUserList = async (req, res) => {
     try {
+        const userId = req.params.userId
+        const user = await getUserById(userId)
+
+        if (!user) {
+            return res.status(404).json({ error: 'USER NOT FOUND' })
+        }
+        res.status(200).send(user)
 
     } catch (error) {
         console.error(error)
@@ -53,7 +60,8 @@ export const getUserList = (req, res) => {
 
 //             ? res.status(400).json({ error: 'EMAIL ALREADY REGISTERED' })
 //             : (() => {
-//                 // Update the user data in your JSON file
+
+//  Update the user data in your JSON file
 
 //                 const updatedUserList = [...users, newUserWithId]
 
@@ -69,6 +77,22 @@ export const getUserList = (req, res) => {
 //         res.status(500).json({ error: 'ERROR POST DATA' })
 //     }
 // }
+
+export const postUserList = async (req, res) => {
+    try {
+        const newUser = req.body
+        const createdUser = await createUser(newUser)
+
+        if (!createdUser) {
+            return res.status(400).json({ error: 'EMAIL ALREADY REGISTERED' })
+        }
+        res.status(201).json(createdUser)
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: 'ERROR POST DATA' })
+    }
+}
 
 
 // export const patchUserList = async (req, res) => {
@@ -104,6 +128,24 @@ export const getUserList = (req, res) => {
 //     }
 // }
 
+export const patchUserList = async (req, res) => {
+    try {
+        const userId = req.params.id
+        const updateUser = req.body
+
+        const updatedUser = await updateUser(userId, updateUser)
+
+        if (!updatedUser) {
+            return res.status(404).json({ error: 'USER NOT FOUND' })
+        }
+        res.status(200).json(updatedUser)
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: 'ERROR UPDATING USER' })
+    }
+}
+
 
 // export const delUserList = async (req, res) => {
 //     try {
@@ -133,4 +175,21 @@ export const getUserList = (req, res) => {
 //     }
 // }
 
-export default { getUsersList }
+
+export const delUserList = async (req, res) => {
+    try {
+        const userId = req.params.id
+        const deleteUser = await deleteUser(userId)
+
+        if (!deletedUser) {
+            return res.status(404).json({ error: 'USER NOT FOUND' })
+        }
+        res.status(200).json(deletedUser)
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: 'ERROR DELETING USER' })
+    }
+}
+
+export default { getUsersList, getUserList }
