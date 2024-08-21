@@ -16,11 +16,17 @@ export const getUserById = async (id) => {
 }
 
 export const createUser = async (user) => {
+
+    /* Call the repository */
     const users = await userNewRepository()
+
+    /* Verify if the email right now exist */
     if (users.some(u => u.email === user.email)) {
         return null
     }
-    return await createUserRepo(user)
+
+    /*Create the new user  */
+    return await userNewRepository(user)
 }
 
 export const updateUser = async (id, updatedData) => {

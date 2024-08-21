@@ -15,8 +15,13 @@ const filePath = path.join(process.cwd(), 'src', 'data', 'user.json')
  * after parsing it as JSON.
  */
 const readUsers = () => {
-    const data = fs.readFileSync(filePath, 'utf-8')
-    return JSON.parse(data)
+    try {
+        const data = fs.readFileSync(filePath, 'utf-8')
+        return JSON.parse(data)
+    } catch (error) {
+        console.error('Error reading user data:', error)
+        return []
+    }
 }
 
 /**
@@ -24,10 +29,13 @@ const readUsers = () => {
  * @param user - The `user` parameter in the `writeUsers` function is the data that you want to write
  * to a file. It should be an object that you want to convert to a JSON string and save to a file.
  */
-const writeUsers = (user) => {
-    fs.writeFileSync(filePath, JSON.stringify(user, null, 2))
+const writeUsers = (users) => {
+    try {
+        fs.writeFileSync(filePath, JSON.stringify(users, null, 2))
+    } catch (error) {
+        console.error('Error writing user data', error)
+    }
 }
-
 
 export const getAllUsers = () => readUsers()
 
@@ -36,12 +44,27 @@ export const getUserById = (id) => {
     return users.find(user => user.id === id)
 }
 
-export const createUser = (user) => {
+export const createUser = (newUser) => {
     const users = readUsers()
-    const newUser = { ...user, id: uuidv4() }
+
+    if (!Array.isArray(users)) {
+        throw new TypeError('User data should be an array')
+    }
+
+    const userExist = users.some(user => user.email === newUser.email)
+    if (userExist) {
+        return null
+    }
+
     users.push(newUser)
     writeUsers(users)
+
     return newUser
+
+    // const newUser = { ...user, id: uuidv4() }
+    // users.push(newUser)
+    // writeUsers(users)
+    // return newUser
 }
 
 export const updateUser = (id, updatedData) => {
