@@ -37,6 +37,11 @@ const writeUsers = (users) => {
     }
 }
 
+export const getUserByEmail = (email) => {
+    const users = readUsers()
+    return users.find(user => user.email === email) || null
+}
+
 export const getAllUsers = () => readUsers()
 
 export const getUserById = (id) => {
